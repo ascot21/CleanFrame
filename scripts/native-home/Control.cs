@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 class Control {
  const string Operation="http://tizen.org/appcontrol/operation/main";
- const string Target="nClrkHome1.FrameHome";
+ const string Target="lQABWy7w88.CleanFrame";
  static readonly string[] Keys={"db/appfw/home_appid","db/appfw/startup_appid","db/appfw/booting_appid_backup","db/first_screen/type"};
  const string AutoKey="db/menu/smart_hub/ontvsetting/auto_start";
  [DllImport("libbundle.so.0")] static extern IntPtr bundle_create();
@@ -40,7 +40,7 @@ class Control {
    if(args[0]=="restore"){Restore(original);Console.WriteLine("CLEANFRAME_HOME_RESTORED="+JsonSerializer.Serialize(Query()));return 0;}
    if(before.Home!=original.Home||before.Autostart!=original.Autostart)throw new Exception("Configuration changed since snapshot");
    foreach(var k in Keys)if(before.Strings[k]!=original.Strings[k])throw new Exception("Setting changed since snapshot: "+k);
-   if(!Directory.Exists("/opt/usr/apps/nClrkHome1")||before.BootSupported==0)throw new Exception("Installed launcher is not eligible for boot");
+   if(!Directory.Exists("/opt/usr/apps/lQABWy7w88")||before.BootSupported==0)throw new Exception("Installed launcher is not eligible for boot");
    try{SetHome(Target);SetString("db/appfw/home_appid",Target);SetAuto(1);Console.WriteLine("CLEANFRAME_HOME_APPLIED="+JsonSerializer.Serialize(Query()));}
    catch{Restore(original);Console.Error.WriteLine("Original Home/startup values restored after a failed apply");throw;}
    return 0;
